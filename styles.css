@@ -1,5 +1,7 @@
 /* ===================== RESET & BASE ===================== */
-*, *::before, *::after {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -115,7 +117,7 @@ body {
     font-weight: 700;
     letter-spacing: 4px;
     text-transform: uppercase;
-    text-shadow: 2px 4px 20px rgba(0,0,0,0.4);
+    text-shadow: 2px 4px 20px rgba(0, 0, 0, 0.4);
 }
 
 .hero-title .or {
@@ -126,7 +128,7 @@ body {
     font-size: 0.6em;
     display: inline-block;
     margin: 0 8px;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .hero-scroll-indicator {
@@ -155,8 +157,8 @@ body {
     width: 16px;
     height: 16px;
     margin: 0 auto;
-    border-right: 2px solid rgba(255,255,255,0.7);
-    border-bottom: 2px solid rgba(255,255,255,0.7);
+    border-right: 2px solid rgba(255, 255, 255, 0.7);
+    border-bottom: 2px solid rgba(255, 255, 255, 0.7);
     transform: rotate(45deg);
     animation: scrollBounce 2s ease-in-out infinite;
     transition: border-color 0.3s ease;
@@ -168,8 +170,17 @@ body {
 }
 
 @keyframes scrollBounce {
-    0%, 100% { transform: rotate(45deg) translateY(0); opacity: 1; }
-    50% { transform: rotate(45deg) translateY(6px); opacity: 0.3; }
+
+    0%,
+    100% {
+        transform: rotate(45deg) translateY(0);
+        opacity: 1;
+    }
+
+    50% {
+        transform: rotate(45deg) translateY(6px);
+        opacity: 0.3;
+    }
 }
 
 /* ===================== SECTIONS COMMON ===================== */
@@ -366,7 +377,7 @@ body {
 
 .team-card:hover {
     transform: translateY(-6px);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
 }
 
 .team-girl {
@@ -390,8 +401,13 @@ body {
     margin-bottom: 12px;
 }
 
-.team-girl h3 { color: var(--pink-dark); }
-.team-boy h3 { color: var(--blue-dark); }
+.team-girl h3 {
+    color: var(--pink-dark);
+}
+
+.team-boy h3 {
+    color: var(--blue-dark);
+}
 
 .team-card p {
     color: var(--gray);
@@ -572,7 +588,7 @@ body {
     font-size: 1.2rem;
     background: var(--white);
     border-radius: 12px;
-    border: 2px dashed rgba(0,0,0,0.1);
+    border: 2px dashed rgba(0, 0, 0, 0.1);
 }
 
 /* ===================== MAPA ===================== */
@@ -583,7 +599,7 @@ body {
 .mapa-wrapper {
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 8px 30px rgba(0,0,0,0.08);
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08);
     margin-bottom: 24px;
 }
 
@@ -663,7 +679,7 @@ body {
 .form-group textarea {
     width: 100%;
     padding: 14px 18px;
-    border: 2px solid rgba(0,0,0,0.08);
+    border: 2px solid rgba(0, 0, 0, 0.08);
     border-radius: 12px;
     font-family: var(--font-body);
     font-size: 0.95rem;
@@ -692,7 +708,7 @@ body {
 .guest-btn {
     width: 48px;
     height: 48px;
-    border: 2px solid rgba(0,0,0,0.08);
+    border: 2px solid rgba(0, 0, 0, 0.08);
     background: var(--white);
     font-size: 1.3rem;
     cursor: pointer;
@@ -718,7 +734,7 @@ body {
     width: 60px;
     height: 48px;
     text-align: center;
-    border: 2px solid rgba(0,0,0,0.08);
+    border: 2px solid rgba(0, 0, 0, 0.08);
     border-left: none;
     border-right: none;
     font-family: var(--font-display);
@@ -798,20 +814,20 @@ body {
 .footer-hashtag {
     font-size: 0.9rem;
     letter-spacing: 2px;
-    color: rgba(255,255,255,0.5);
+    color: rgba(255, 255, 255, 0.5);
     margin-bottom: 16px;
 }
 
 .footer-message {
     font-size: 0.85rem;
-    color: rgba(255,255,255,0.6);
+    color: rgba(255, 255, 255, 0.6);
     font-weight: 300;
     margin-bottom: 16px;
 }
 
 .footer-copy {
     font-size: 0.75rem;
-    color: rgba(255,255,255,0.3);
+    color: rgba(255, 255, 255, 0.3);
 }
 
 /* ===================== MUSIC CONTROL ===================== */
@@ -827,7 +843,7 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
     z-index: 1000;
     transition: transform 0.3s ease;
     font-size: 1.3rem;
@@ -843,6 +859,7 @@ body {
         opacity: 0;
         transform: translateY(30px);
     }
+
     to {
         opacity: 1;
         transform: translateY(0);
@@ -850,9 +867,22 @@ body {
 }
 
 @keyframes bounce {
-    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
-    40% { transform: translateY(-10px); }
-    60% { transform: translateY(-5px); }
+
+    0%,
+    20%,
+    50%,
+    80%,
+    100% {
+        transform: translateY(0);
+    }
+
+    40% {
+        transform: translateY(-10px);
+    }
+
+    60% {
+        transform: translateY(-5px);
+    }
 }
 
 .fade-in {
@@ -870,6 +900,21 @@ body {
 @media (max-width: 600px) {
     .section {
         padding: 60px 0;
+    }
+
+    .hero video {
+        width: 160%;
+        height: 160%;
+        object-fit: contain;
+    }
+
+    .hero-title {
+        font-size: clamp(2.2rem, 10vw, 3.5rem);
+        letter-spacing: 2px;
+    }
+
+    .hero-subtitle {
+        font-size: clamp(1.4rem, 5vw, 2rem);
     }
 
     .countdown-item {
@@ -904,7 +949,7 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 2000;
     display: flex;
     align-items: center;
