@@ -28,7 +28,13 @@ if (heroVideo) {
 
     heroVideo.addEventListener('ended', function () {
         heroVideo.loop = true;
+        heroVideo.muted = true;
         heroVideo.play();
+
+        bgMusic.volume = 0.3;
+        bgMusic.play().catch(function () {});
+        musicPlaying = true;
+        musicIcon.textContent = '🎵';
     });
 
     scrollIndicator.addEventListener('click', function () {
