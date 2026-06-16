@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>H&N Boy or Girl?</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;500;600&family=Great+Vibes&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+    <!-- ===================== HERO / VIDEO ===================== -->
+    <section id="hero" class="hero">
+        <div class="video-overlay"></div>
+        <video id="heroVideo" autoplay muted playsinline>
+            <source src="vid_ini.mp4" type="video/mp4">
+        </video>
+        <div class="hero-content" id="heroContent">
+            <p class="hero-subtitle"><span class="name-heidy">Heidy</span> & <span class="name-nilson">Nilson</span></p>
+            <h1 class="hero-title">Boy <span class="or">or</span> Girl?</h1>
+            <div class="hero-scroll-indicator" id="scrollIndicator" style="display:none;">
+                <div class="scroll-arrows">
+                    <div class="scroll-arrow"></div>
+                    <div class="scroll-arrow"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== MENSAJE + EQUIPOS ===================== -->
+    <section id="mensaje" class="section section-mensaje">
+        <div class="container">
+            <p class="mensaje-text">
+                Nuestro corazón ya conoce el amor más grande,<br>
+                pero aún nos falta descubrir un pequeño detalle…
+            </p>
+            <h2 class="mensaje-highlight">¿<span class="text-pink">Rosa</span> o <span class="text-blue">Azul</span>?</h2>
+            <p class="mensaje-text">
+                Acompáñanos a revelar el secreto mejor guardado de nuestra familia.
+            </p>
+
+            <div class="mensaje-divider"></div>
+
+            <p class="mensaje-dresscode">Elige tu equipo y ven preparado:</p>
+
+            <div class="teams-grid">
+                <div class="team-card team-girl">
+                    <div class="team-emoji">💗</div>
+                    <h3>Team Niña</h3>
+                    <p>Trae una prenda <strong>rosa</strong> y un paquete de <strong>pañales</strong></p>
+                </div>
+                <div class="team-card team-boy">
+                    <div class="team-emoji">💙</div>
+                    <h3>Team Niño</h3>
+                    <p>Trae una prenda <strong>azul</strong> y un paquete de <strong>pañitos húmedos</strong></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== DETALLES ===================== -->
+    <section id="detalles" class="section section-detalles">
+        <div class="container">
+            <h2 class="section-title">¿Cuándo y Dónde?</h2>
+            <div class="detalles-invitacion">
+                <p class="detalle-fecha">Sábado, 4 de Julio 2026</p>
+                <p class="detalle-hora">2:00 PM</p>
+                <div class="detalle-linea"></div>
+                <p class="detalle-lugar">Hacienda Fontanar</p>
+                <p class="detalle-direccion">Pimiento, Chía</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== COUNTDOWN ===================== -->
+    <section id="countdown" class="section section-countdown">
+        <div class="container">
+            <h2 class="section-title">Faltan</h2>
+            <div class="countdown-timer">
+                <div class="countdown-item">
+                    <span class="countdown-number" id="days">00</span>
+                    <span class="countdown-label">Días</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="hours">00</span>
+                    <span class="countdown-label">Horas</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="minutes">00</span>
+                    <span class="countdown-label">Minutos</span>
+                </div>
+                <div class="countdown-separator">:</div>
+                <div class="countdown-item">
+                    <span class="countdown-number" id="seconds">00</span>
+                    <span class="countdown-label">Segundos</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== VOTACIÓN ===================== -->
+    <section id="votacion" class="section section-votacion">
+        <div class="container">
+            <h2 class="section-title">¿Tú qué crees?</h2>
+            <p class="votacion-intro">¡Haz tu apuesta!</p>
+            <div class="votacion-buttons">
+                <button class="vote-btn vote-girl" id="voteGirl" onclick="vote('girl')">
+                    <span class="vote-icon">👧</span>
+                    <span class="vote-text">Niña</span>
+                    <span class="vote-percent" id="girlPercent"></span>
+                </button>
+                <div class="vote-vs">VS</div>
+                <button class="vote-btn vote-boy" id="voteBoy" onclick="vote('boy')">
+                    <span class="vote-icon">👦</span>
+                    <span class="vote-text">Niño</span>
+                    <span class="vote-percent" id="boyPercent"></span>
+                </button>
+            </div>
+            <div class="vote-bar-container" id="voteBarContainer" style="display:none;">
+                <div class="vote-bar">
+                    <div class="vote-bar-girl" id="voteBarGirl"></div>
+                    <div class="vote-bar-boy" id="voteBarBoy"></div>
+                </div>
+                <div class="vote-total" id="voteTotal"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== GALERÍA ===================== -->
+    <section id="galeria" class="section section-galeria">
+        <div class="container">
+            <h2 class="section-title">Nosotros</h2>
+            <div class="galeria-grid" id="galeriaGrid">
+                <!-- Las fotos se agregan aquí -->
+                <div class="galeria-placeholder">
+                    <p>📸 Próximamente</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== MAPA ===================== -->
+    <section id="mapa" class="section section-mapa">
+        <div class="container">
+            <h2 class="section-title">¿Cómo llegar?</h2>
+            <div class="mapa-wrapper">
+                <iframe
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.5!2d-74.05!3d4.85!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zSGFjaWVuZGEgRm9udGFuYXI!5e0!3m2!1ses!2sco!4v1"
+                    width="100%" height="400" style="border:0; border-radius: 12px;" allowfullscreen="" loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+            <div class="mapa-buttons">
+                <a href="https://www.google.com/maps/search/Hacienda+Fontanar+Chia" target="_blank"
+                    class="btn btn-map">
+                    📍 Abrir en Google Maps
+                </a>
+                <a href="https://waze.com/ul?q=Hacienda+Fontanar+Chia" target="_blank"
+                    class="btn btn-map btn-waze">
+                    🚗 Abrir en Waze
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== RSVP ===================== -->
+    <section id="rsvp" class="section section-rsvp">
+        <div class="container">
+            <h2 class="section-title">¿Vienes?</h2>
+            <p class="rsvp-text">Queremos contar contigo en este día tan especial.</p>
+            <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label for="rsvpName">Tu nombre</label>
+                    <input type="text" id="rsvpName" name="name" placeholder="Nombre completo" required>
+                </div>
+                <div class="form-group">
+                    <label for="rsvpGuests">¿Cuántos van?</label>
+                    <div class="guest-counter">
+                        <button type="button" class="guest-btn" onclick="changeGuests(-1)">−</button>
+                        <input type="number" id="rsvpGuests" name="guests" value="1" min="1" max="10" readonly>
+                        <button type="button" class="guest-btn" onclick="changeGuests(1)">+</button>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="rsvpMessage">¿Algo que quieras decirnos?</label>
+                    <textarea id="rsvpMessage" name="message" placeholder="Opcional" rows="3"></textarea>
+                </div>
+                <button type="submit" class="btn btn-rsvp">¡Ahí estaré!</button>
+            </form>
+            <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+                <p class="success-icon">🎉</p>
+                <p class="success-text">¡Listo! Te esperamos con mucha emoción.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer id="footer" class="footer">
+        <div class="container">
+            <p class="footer-names"><span class="name-heidy">Heidy</span> & <span class="name-nilson">Nilson</span></p>
+            <p class="footer-hashtag">#HeidyYNilson</p>
+            <p class="footer-message">Gracias por ser parte de este momento</p>
+            <p class="footer-copy">2026</p>
+        </div>
+    </footer>
+
+    <!-- ===================== MÚSICA ===================== -->
+    <div class="music-control" id="musicControl" onclick="toggleMusic()">
+        <span id="musicIcon">🔇</span>
+    </div>
+    <audio id="bgMusic" loop>
+        <source src="music.mp3" type="audio/mpeg">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
