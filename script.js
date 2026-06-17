@@ -186,9 +186,12 @@ function toggleMusic() {
         musicIcon.textContent = '🔇';
         musicPlaying = false;
     } else {
-        heroVideo.muted = false;
-        bgMusic.volume = 0.3;
-        bgMusic.play().catch(function () {});
+        if (heroVideo.loop) {
+            bgMusic.volume = 0.3;
+            bgMusic.play().catch(function () {});
+        } else {
+            heroVideo.muted = false;
+        }
         musicIcon.textContent = '🎵';
         musicPlaying = true;
     }
