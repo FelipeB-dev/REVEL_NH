@@ -3,12 +3,25 @@ const heroVideo = document.getElementById('heroVideo');
 const heroContent = document.getElementById('heroContent');
 const scrollIndicator = document.getElementById('scrollIndicator');
 
-if (heroVideo) {
-    let blurTriggered = false;
+// ===================== MUSIC FADE IN =====================
+function fadeInMusic(audio, targetVolume, duration) {
+    audio.volume = 0;
+    audio.play().catch(function () {});
+    var step = targetVolume / (duration / 50);
+    var fadeInterval = setInterval(function () {
+        if (audio.volume + step >= targetVolume) {
+            audio.volume = targetVolume;
+            clearInterval(fadeInterval);
+        } else {
+            audio.volume = Math.min(audio.volume + step, targetVolume);
+        }
+    }, 50);
+}
 
-    heroVideo.addEventListener('loadedmetadata', function () {
-        heroVideo.currentTime = 5;
-    });
+if (heroVideo) {
+    heroVideo.currentTime = 0;
+    heroVideo.play();
+    let blurTriggered = false;
 
     heroVideo.addEventListener('timeupdate', function () {
         if (!blurTriggered && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 3) {
@@ -31,10 +44,11 @@ if (heroVideo) {
         heroVideo.muted = true;
         heroVideo.play();
 
-        bgMusic.volume = 0.3;
-        bgMusic.play().catch(function () {});
-        musicPlaying = true;
-        musicIcon.textContent = '🎵';
+        if (!musicPlaying) {
+            fadeInMusic(bgMusic, 0.3, 3000);
+            musicPlaying = true;
+            musicIcon.textContent = '🎵';
+        }
     });
 
     scrollIndicator.addEventListener('click', function () {
@@ -71,82 +85,83 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-// ===================== VOTACIÓN (localStorage) =====================
+// ===================== GOOGLE SHEETS API =====================
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycbz-lBCMhTcYElKVgoXaL5aX0ZFYwD1mZmssMCPhhDmYgIcSL50a0s-qxwl5ofieRyKXDQ/exec';
+
+function sendToSheet(data) {
+    var params = Object.keys(data).map(function(k) {
+        return encodeURIComponent(k) + '=' + encodeURIComponent(data[k]);
+    }).join('&');
+    return fetch(SHEET_URL + '?' + params);
+}
+
+// ===================== VOTACIÓN =====================
 const VOTE_KEY = 'baby_reveal_vote';
-const VOTES_KEY = 'baby_reveal_votes';
-
-function getVotes() {
-    const stored = localStorage.getItem(VOTES_KEY);
-    return stored ? JSON.parse(stored) : { girl: 0, boy: 0 };
-}
-
-function saveVotes(votes) {
-    localStorage.setItem(VOTES_KEY, JSON.stringify(votes));
-}
 
 function vote(choice) {
     if (localStorage.getItem(VOTE_KEY)) return;
 
     localStorage.setItem(VOTE_KEY, choice);
-    const votes = getVotes();
-    votes[choice]++;
-    saveVotes(votes);
-    updateVoteUI(choice);
+
+    var girlBtn = document.getElementById('voteGirl');
+    var boyBtn = document.getElementById('voteBoy');
+    girlBtn.classList.add('voted');
+    boyBtn.classList.add('voted');
+    if (choice === 'girl') girlBtn.classList.add('selected');
+    if (choice === 'boy') boyBtn.classList.add('selected');
+
+    sendToSheet({ type: 'vote', choice: choice }).then(function () {
+        loadVotes();
+    });
 }
 
-function updateVoteUI(userVote) {
-    const votes = getVotes();
-    const total = votes.girl + votes.boy;
+function loadVotes() {
+    fetch(SHEET_URL + '?type=getVotes')
+        .then(function (r) { return r.json(); })
+        .then(function (data) {
+            if (data.total === 0) return;
+            updateVoteUI(data.girl, data.boy, data.total);
+        })
+        .catch(function () {});
+}
 
-    if (total === 0) return;
-
-    const girlPct = Math.round((votes.girl / total) * 100);
-    const boyPct = 100 - girlPct;
+function updateVoteUI(girl, boy, total) {
+    var girlPct = Math.round((girl / total) * 100);
+    var boyPct = 100 - girlPct;
 
     document.getElementById('girlPercent').textContent = girlPct + '%';
     document.getElementById('boyPercent').textContent = boyPct + '%';
 
-    const barContainer = document.getElementById('voteBarContainer');
+    var barContainer = document.getElementById('voteBarContainer');
     barContainer.style.display = 'block';
     document.getElementById('voteBarGirl').style.width = girlPct + '%';
     document.getElementById('voteBarGirl').textContent = girlPct > 10 ? girlPct + '%' : '';
     document.getElementById('voteBarBoy').style.width = boyPct + '%';
     document.getElementById('voteBarBoy').textContent = boyPct > 10 ? boyPct + '%' : '';
     document.getElementById('voteTotal').textContent = total + ' votos en total';
-
-    if (userVote) {
-        const girlBtn = document.getElementById('voteGirl');
-        const boyBtn = document.getElementById('voteBoy');
-        girlBtn.classList.add('voted');
-        boyBtn.classList.add('voted');
-        if (userVote === 'girl') girlBtn.classList.add('selected');
-        if (userVote === 'boy') boyBtn.classList.add('selected');
-    }
 }
 
-const existingVote = localStorage.getItem(VOTE_KEY);
+var existingVote = localStorage.getItem(VOTE_KEY);
 if (existingVote) {
-    updateVoteUI(existingVote);
+    var girlBtn = document.getElementById('voteGirl');
+    var boyBtn = document.getElementById('voteBoy');
+    girlBtn.classList.add('voted');
+    boyBtn.classList.add('voted');
+    if (existingVote === 'girl') girlBtn.classList.add('selected');
+    if (existingVote === 'boy') boyBtn.classList.add('selected');
 }
+loadVotes();
 
 // ===================== RSVP =====================
-function changeGuests(delta) {
-    const input = document.getElementById('rsvpGuests');
-    let val = parseInt(input.value) + delta;
-    if (val < 1) val = 1;
-    if (val > 10) val = 10;
-    input.value = val;
-}
-
 function submitRSVP(e) {
     e.preventDefault();
-    const form = document.getElementById('rsvpForm');
-    const success = document.getElementById('rsvpSuccess');
+    var name = document.getElementById('rsvpName').value;
+    var form = document.getElementById('rsvpForm');
+    var success = document.getElementById('rsvpSuccess');
 
-    // TODO: conectar con Google Forms cuando esté listo
-    // Por ahora muestra confirmación visual
+    sendToSheet({ type: 'rsvp', name: name });
+
     form.style.display = 'none';
-    document.querySelector('.rsvp-text').style.display = 'none';
     success.style.display = 'block';
 }
 
@@ -155,14 +170,25 @@ const bgMusic = document.getElementById('bgMusic');
 const musicIcon = document.getElementById('musicIcon');
 let musicPlaying = false;
 
+bgMusic.src = 'music.mp3?v=' + Date.now();
+bgMusic.load();
+
 function toggleMusic() {
+    var hint = document.getElementById('musicHint');
+    var control = document.getElementById('musicControl');
+
+    if (hint) hint.classList.add('hidden');
+    control.classList.add('active');
+
     if (musicPlaying) {
         bgMusic.pause();
+        heroVideo.muted = true;
         musicIcon.textContent = '🔇';
         musicPlaying = false;
     } else {
+        heroVideo.muted = false;
         bgMusic.volume = 0.3;
-        bgMusic.play().catch(() => {});
+        bgMusic.play().catch(function () {});
         musicIcon.textContent = '🎵';
         musicPlaying = true;
     }

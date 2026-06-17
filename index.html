@@ -19,7 +19,7 @@
     <!-- ===================== HERO / VIDEO ===================== -->
     <section id="hero" class="hero">
         <div class="video-overlay"></div>
-        <video id="heroVideo" autoplay muted playsinline>
+        <video id="heroVideo" autoplay muted playsinline preload="auto">
             <source src="vid_ini.mp4" type="video/mp4">
         </video>
         <div class="hero-content" id="heroContent">
@@ -138,13 +138,11 @@
     <!-- ===================== GALERÍA ===================== -->
     <section id="galeria" class="section section-galeria">
         <div class="container">
-            <h2 class="section-title">Nosotros</h2>
-            <div class="galeria-grid" id="galeriaGrid">
-                <!-- Las fotos se agregan aquí -->
-                <div class="galeria-placeholder">
-                    <p>📸 Próximamente</p>
-                </div>
-            </div>
+            <h2 class="section-title">Comparte tus fotos</h2>
+            <p class="galeria-text">Captura los mejores momentos y súbelos a nuestro álbum compartido</p>
+            <a href="https://photos.app.goo.gl/UDuu2MCpkh6xdhkY6" target="_blank" class="btn btn-album">
+                📸 Abrir álbum de fotos
+            </a>
         </div>
     </section>
 
@@ -173,6 +171,24 @@
     </section>
 
 
+    <!-- ===================== RSVP ===================== -->
+    <section id="rsvp" class="section section-rsvp">
+        <div class="container">
+            <h2 class="section-title">¿Vienes?</h2>
+            <form class="rsvp-form" id="rsvpForm" onsubmit="submitRSVP(event)">
+                <div class="form-group">
+                    <label for="rsvpName">Tu nombre</label>
+                    <input type="text" id="rsvpName" name="name" placeholder="Nombre completo" required>
+                </div>
+                <button type="submit" class="btn btn-rsvp">¡Ahí estaré!</button>
+            </form>
+            <div class="rsvp-success" id="rsvpSuccess" style="display:none;">
+                <p class="success-icon">🎉</p>
+                <p class="success-text">¡Listo! Te esperamos con mucha emoción.</p>
+            </div>
+        </div>
+    </section>
+
     <!-- ===================== FOOTER ===================== -->
     <footer id="footer" class="footer">
         <div class="container">
@@ -184,11 +200,12 @@
     </footer>
 
     <!-- ===================== MÚSICA ===================== -->
+    <div class="music-hint" id="musicHint">Toca para activar el sonido 🎵</div>
     <div class="music-control" id="musicControl" onclick="toggleMusic()">
         <span id="musicIcon">🔇</span>
     </div>
     <audio id="bgMusic" loop>
-        <source src="music.mp3" type="audio/mpeg">
+        <source src="music.mp3?v=2" type="audio/mpeg">
     </audio>
 
     <script src="script.js"></script>
