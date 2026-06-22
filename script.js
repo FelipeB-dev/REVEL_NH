@@ -23,6 +23,8 @@ if (heroVideo) {
     heroVideo.play();
     let blurTriggered = false;
 
+    var musicStarted = false;
+
     heroVideo.addEventListener('timeupdate', function () {
         if (!blurTriggered && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 3) {
             blurTriggered = true;
@@ -37,18 +39,19 @@ if (heroVideo) {
                 scrollIndicator.style.animation = 'fadeInUp 0.8s ease forwards';
             }, 3500);
         }
+
+        if (!musicStarted && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 5) {
+            musicStarted = true;
+            fadeInMusic(bgMusic, 0.3, 4000);
+            musicPlaying = true;
+            musicIcon.textContent = '🎵';
+        }
     });
 
     heroVideo.addEventListener('ended', function () {
         heroVideo.loop = true;
         heroVideo.muted = true;
         heroVideo.play();
-
-        if (!musicPlaying) {
-            fadeInMusic(bgMusic, 0.3, 3000);
-            musicPlaying = true;
-            musicIcon.textContent = '🎵';
-        }
     });
 
     scrollIndicator.addEventListener('click', function () {
