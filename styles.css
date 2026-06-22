@@ -85,6 +85,77 @@ body {
     50% { opacity: 1; }
 }
 
+/* ===================== INTRO OVERLAY ===================== */
+.intro-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    transition: opacity 0.8s ease;
+    overflow: hidden;
+}
+
+body.no-scroll {
+    overflow: hidden;
+}
+
+.intro-overlay.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.intro-title {
+    font-family: var(--font-display);
+    font-size: 3.5rem;
+    color: var(--white);
+    margin-bottom: 40px;
+    letter-spacing: 2px;
+}
+
+.intro-boy {
+    color: var(--blue);
+}
+
+.intro-or {
+    font-family: var(--font-script);
+    color: var(--white);
+    font-size: 3rem;
+}
+
+.intro-girl {
+    color: var(--pink);
+}
+
+.intro-btn {
+    padding: 16px 50px;
+    border: none;
+    border-radius: 50px;
+    background: linear-gradient(135deg, var(--pink), var(--blue));
+    color: var(--white);
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    letter-spacing: 1px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+.intro-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 30px rgba(232, 160, 191, 0.5);
+}
+
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(232, 160, 191, 0.4); }
+    50% { box-shadow: 0 0 0 15px rgba(232, 160, 191, 0); }
+}
+
 /* ===================== HERO ===================== */
 .hero {
     position: relative;

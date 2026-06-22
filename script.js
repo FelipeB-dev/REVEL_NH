@@ -18,11 +18,33 @@ function fadeInMusic(audio, targetVolume, duration) {
     }, 50);
 }
 
-if (heroVideo) {
-    heroVideo.currentTime = 0;
-    heroVideo.play();
-    let blurTriggered = false;
+// ===================== INTRO =====================
+document.body.classList.add('no-scroll');
 
+function startExperience() {
+    var overlay = document.getElementById('introOverlay');
+    overlay.classList.add('hidden');
+    document.body.classList.remove('no-scroll');
+    setTimeout(function () { overlay.remove(); }, 1000);
+
+    heroVideo.currentTime = 0;
+    heroVideo.volume = 0;
+    heroVideo.muted = false;
+    heroVideo.play();
+
+    var vol = 0;
+    var fi = setInterval(function () {
+        vol += 0.013;
+        if (vol >= 0.8) { heroVideo.volume = 0.8; clearInterval(fi); }
+        else { heroVideo.volume = vol; }
+    }, 50);
+
+    musicPlaying = true;
+    musicIcon.textContent = '🎵';
+}
+
+if (heroVideo) {
+    let blurTriggered = false;
     var musicStarted = false;
 
     heroVideo.addEventListener('timeupdate', function () {
