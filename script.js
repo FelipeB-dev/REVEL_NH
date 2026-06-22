@@ -28,17 +28,9 @@ function startExperience() {
     setTimeout(function () { overlay.remove(); }, 1000);
 
     heroVideo.currentTime = 0;
-    heroVideo.volume = 0;
-    heroVideo.muted = false;
     heroVideo.play();
 
-    var vol = 0;
-    var fi = setInterval(function () {
-        vol += 0.013;
-        if (vol >= 0.8) { heroVideo.volume = 0.8; clearInterval(fi); }
-        else { heroVideo.volume = vol; }
-    }, 50);
-
+    fadeInMusic(bgMusic, 0.3, 3000);
     musicPlaying = true;
     musicIcon.textContent = '🎵';
 }
@@ -62,17 +54,10 @@ if (heroVideo) {
             }, 3500);
         }
 
-        if (!musicStarted && heroVideo.duration && heroVideo.currentTime >= heroVideo.duration - 5) {
-            musicStarted = true;
-            fadeInMusic(bgMusic, 0.3, 4000);
-            musicPlaying = true;
-            musicIcon.textContent = '🎵';
-        }
     });
 
     heroVideo.addEventListener('ended', function () {
         heroVideo.loop = true;
-        heroVideo.muted = true;
         heroVideo.play();
     });
 
@@ -82,7 +67,7 @@ if (heroVideo) {
 }
 
 // ===================== COUNTDOWN =====================
-const eventDate = new Date('2026-07-04T14:00:00-05:00');
+const eventDate = new Date('2026-07-04T13:30:00-05:00');
 
 function updateCountdown() {
     const now = new Date();
@@ -207,16 +192,11 @@ function toggleMusic() {
 
     if (musicPlaying) {
         bgMusic.pause();
-        heroVideo.muted = true;
         musicIcon.textContent = '🔇';
         musicPlaying = false;
     } else {
-        if (heroVideo.loop) {
-            bgMusic.volume = 0.3;
-            bgMusic.play().catch(function () {});
-        } else {
-            heroVideo.muted = false;
-        }
+        bgMusic.volume = 0.3;
+        bgMusic.play().catch(function () {});
         musicIcon.textContent = '🎵';
         musicPlaying = true;
     }
